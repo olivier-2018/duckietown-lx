@@ -1,9 +1,9 @@
 import sys
 
-import cv2
+
 import duckietown_code_utils as dcu
 import numpy as np
-
+import cv2
 
 def nothing(x):
     pass
