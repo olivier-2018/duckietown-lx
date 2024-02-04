@@ -37,23 +37,30 @@ def get_mask(shape: Tuple[int, int], side: str):
     coors=np.hstack((x.reshape(-1, 1), y.reshape(-1,1))) 
 
     # Zone 1: band on left hand side
-    p1 = [(1.0*height, 0.*width), (0.3*height, 0.3*width), (0.3*height, 0.4*width), (1.*height, 0.2*width)]
+    p1 = [  (1.0*height, 0.*width), 
+            (0.5*height, 0.1*width), 
+            (0.35*height, 0.25*width), 
+            (0.35*height, 0.5*width), 
+            (0.7*height, 0.5*width), 
+            (0.7*height, 0.26*width),
+            (1.*height, 0.2*width)] # start bottom-left corner, going CW
     mask1 = Path(p1).contains_points(coors) * 1
     # Zone2: symmetric to zone1
     p2 = get_symmetry(p1, width)
     mask2 = Path(p2).contains_points(coors) * -1
 
     # Zone 3: band on left hand side
-    p3 = [(1.*height, 0.2*width), (1.*height, 0.5*width), (0.7*height, 0.5*width), (0.7*height, 0.285*width)]
-    mask3 = Path(p3).contains_points(coors) * -1
+    p3 = [(1.*height, 0.2*width), (1.*height, 0.5*width), (0.7*height, 0.5*width), (0.7*height, 0.27*width)] # going CCW
+    mask3 = Path(p3).contains_points(coors) * -20
     # Zone4: symmetric to zone3
     p4 = get_symmetry(p3, width)
-    mask4 = Path(p4).contains_points(coors) * -1
+    mask4 = Path(p4).contains_points(coors) * -20
 
-    mask = (mask1 + mask2 + mask3 + mask4).reshape(height, width)
-
+    mask_Left = mask1 + mask2 + mask3 + mask4
+    mask_Right = - mask1 - mask2 + mask3 + mask4
+    
     if side == "left":
-        return mask * 1.0
+        return mask_Left.reshape(height, width)
     elif side == "right":
-        return mask * -1.0
+        return mask_Right.reshape(height, width)
 
