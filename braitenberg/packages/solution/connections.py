@@ -45,10 +45,10 @@ def get_mask(shape: Tuple[int, int], side: str):
 
     # Zone 3: band on left hand side
     p3 = [(1.*height, 0.2*width), (1.*height, 0.5*width), (0.7*height, 0.5*width), (0.7*height, 0.285*width)]
-    mask3 = Path(p3).contains_points(coors) * -2
+    mask3 = Path(p3).contains_points(coors) * -1
     # Zone4: symmetric to zone3
     p4 = get_symmetry(p3, width)
-    mask4 = Path(p4).contains_points(coors) * -4
+    mask4 = Path(p4).contains_points(coors) * -1
 
     mask = (mask1 + mask2 + mask3 + mask4).reshape(height, width)
 
