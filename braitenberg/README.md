@@ -6,7 +6,7 @@
 
 # About these activities
 
-In this learning experience, you will create your own Braitenberg agent for the task of avoiding duckies on the road. 
+In this learning experience, you will create your own Braitenberg agent for the task of avoiding duckies on the road. <br>
 You'll first develop computer vision techniques that manipulate and filter images to highlight specific objects, 
 then utilize the filtered images to guide your agent.
 
