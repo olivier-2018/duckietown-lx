@@ -92,11 +92,13 @@ class BraitenbergAgent:
         # now rescale from 0 to 1
         ls = rescale(l, self.l_min, self.l_max)
         rs = rescale(r, self.r_min, self.r_max)
+        min_value = min(ls, rs)
+        sum_value = ls + rs
 
         gain = self.config.gain
         const = self.config.const
-        pwm_left = const + ls * gain
-        pwm_right = const + rs * gain
+        pwm_left = const + (ls - min_value) * gain # * sum_value
+        pwm_right = const + (rs - min_value) * gain # * sum_value
 
         print(f"ls: {ls:.2f} rs:{rs:.2f}  -  pwm_left:{pwm_left:.2f} pwm_right: {pwm_right:.2f}")
         return pwm_left, pwm_right
