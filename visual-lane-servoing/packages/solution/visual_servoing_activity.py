@@ -58,15 +58,15 @@ def get_mask(shape: Tuple[int, int], side: str):
     # Simulation
     pts_left = [(0.89*height, 0.03*width), 
                 (0.56*height, 0.26*width), 
-                (0.56*height, 0.75*width), 
-                (0.89*height, 0.75*width), 
+                (0.56*height, 1.0*width), 
+                (0.89*height, 1.0*width), 
                 (0.89*height, 0.0*width)] 
             
-    mask_Left = Path(pts_left).contains_points(coors) * -0.0038 #(EVAL_CALIB_CONST / SIM_CALIB_CONST_LEFT) 
+    mask_Left = Path(pts_left).contains_points(coors) * -0.0037 #(EVAL_CALIB_CONST / SIM_CALIB_CONST_LEFT) 
 
     # Points zone right: symmetric to zone1
     pts_right = get_symmetry(pts_left, width)
-    mask_Right = Path(pts_right).contains_points(coors) * 0.0032 # (EVAL_CALIB_CONST / SIM_CALIB_CONST_RIGHT) 
+    mask_Right = Path(pts_right).contains_points(coors) * 0.0031 # (EVAL_CALIB_CONST / SIM_CALIB_CONST_RIGHT) 
 
     if side == "left":
         return mask_Left.reshape(height, width)
