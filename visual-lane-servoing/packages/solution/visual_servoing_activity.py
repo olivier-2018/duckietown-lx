@@ -50,23 +50,23 @@ def get_mask(shape: Tuple[int, int], side: str):
     coors=np.hstack((x.reshape(-1, 1), y.reshape(-1,1))) 
 
     # Duckiebot
-    pts_left = [(1.0*height, 0.07*width), 
-                (0.45*height, 0.45*width), 
-                (0.45*height, 0.5*width), 
-                (1*height, 0.5*width), 
-                (1*height, 0.02*width)] 
+    # pts_left = [(1.0*height, 0.07*width), 
+    #             (0.45*height, 0.45*width), 
+    #             (0.45*height, 0.5*width), 
+    #             (1*height, 0.5*width), 
+    #             (1*height, 0.02*width)] 
     # Simulation
-    pts_left =  [(0.9*height, 0.02*width), 
-                (0.5*height, 0.32*width), 
-                (0.5*height, 0.65*width), 
-                (0.9*height, 0.65*width), 
-                (0.9*height, 0.0*width)] 
+    pts_left = [(0.89*height, 0.03*width), 
+                (0.56*height, 0.26*width), 
+                (0.56*height, 0.75*width), 
+                (0.89*height, 0.75*width), 
+                (0.89*height, 0.0*width)] 
             
-    mask_Left = Path(pts_left).contains_points(coors) * -0.0038 #-0.0044 #(EVAL_CALIB_CONST / SIM_CALIB_CONST_LEFT) 
+    mask_Left = Path(pts_left).contains_points(coors) * -0.0038 #(EVAL_CALIB_CONST / SIM_CALIB_CONST_LEFT) 
 
     # Points zone right: symmetric to zone1
     pts_right = get_symmetry(pts_left, width)
-    mask_Right = Path(pts_right).contains_points(coors) * 0.0034 # 0.0042 # (EVAL_CALIB_CONST / SIM_CALIB_CONST_RIGHT) 
+    mask_Right = Path(pts_right).contains_points(coors) * 0.0032 # (EVAL_CALIB_CONST / SIM_CALIB_CONST_RIGHT) 
 
     if side == "left":
         return mask_Left.reshape(height, width)
