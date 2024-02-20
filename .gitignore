@@ -18,3 +18,9 @@ catkin_ws/.catkin_tools/
 *-filtered*
 .pytest_cache
 .idea
+.python-version
+*.pt
+*.pt.etag
+*.zip
+DT_TOKEN
+
