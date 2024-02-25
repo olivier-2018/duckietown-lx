@@ -18,7 +18,6 @@ def histogram_prior(belief, grid_spec, mean_0, cov_0):
 
 # Now let's define the predict function
 
-
 def histogram_predict(belief, left_encoder_ticks, right_encoder_ticks, grid_spec, robot_spec, cov_mask):
     belief_in = belief
 
@@ -181,3 +180,6 @@ def getSegmentDistance(segment):
     x_c = (segment.points[0].x + segment.points[1].x) / 2
     y_c = (segment.points[0].y + segment.points[1].y) / 2
     return sqrt(x_c**2 + y_c**2)
+
+
+    
