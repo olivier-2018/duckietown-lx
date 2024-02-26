@@ -7,18 +7,18 @@
 # About these activities
 
 As part of this learning experience, you will *write your very own collision checker*. 
+
 While this checker will only function in-simulation, it should give you a good idea of the complexity associated with detecting collisions in the real world.
 
-The boilerplate code contained in this folder is a fully functional (albeit wrong) solution. Currently, the solution submits random guesses as to whether the robot collides with the environment or not. 
+The boilerplate code contained in this folder is a fully functional (albeit wrong) solution. <br>
+Currently, the solution submits random guesses as to whether the robot collides with the environment or not. <br>
 You can try to evaluate right away to see how it works.
 
 **Note: This is a code-only exercise: you don't need the Duckiebot**.
 
-This learning experience is provided by the Duckietown team. Visit us at the 
-[Duckietown Website](https://www.duckietown.com) for more learning materials, documentation, and demos.
+This learning experience is provided by the Duckietown team. Visit us at the [Duckietown Website](https://www.duckietown.com) for more learning materials, documentation, and demos.
 
-For guided setup instructions, lecture content, and more related to this LX, see the [Self Driving Cars with 
-Duckietown course on EdX](https://learning.edx.org/course/course-v1:ETHx+DT-01x+3T2022/home).
+For guided setup instructions, lecture content, and more related to this LX, see the [Self Driving Cars with Duckietown course on EdX](https://learning.edx.org/course/course-v1:ETHx+DT-01x+3T2022/home).
 
 
 ## Grading challenge

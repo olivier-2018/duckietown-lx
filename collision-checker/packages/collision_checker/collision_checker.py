@@ -33,9 +33,9 @@ class CollisionChecker:
         context.write("response", result)
 
 
-def check_collision(
-    environment: List[PlacedPrimitive], robot_body: List[PlacedPrimitive], robot_pose: FriendlyPose
-) -> bool:
+def check_collision(environment: List[PlacedPrimitive], 
+                    robot_body: List[PlacedPrimitive], 
+                    robot_pose: FriendlyPose) -> bool:
     # This is just some code to get you started, but you don't have to follow it exactly
 
     # TODO you can start by rototranslating the robot_body by the robot_pose
@@ -46,12 +46,13 @@ def check_collision(
 
     # TODO return the status of the collision
     # for now let's return a random guess
+    
     return random.uniform(0, 1) > 0.5
 
 
-def check_collision_list(
-    rototranslated_robot: List[PlacedPrimitive], environment: List[PlacedPrimitive]
-) -> bool:
+def check_collision_list(rototranslated_robot: List[PlacedPrimitive], 
+                         environment: List[PlacedPrimitive]) -> bool:
+
     # This is just some code to get you started, but you don't have to follow it exactly
     for robot, envObject in itertools.product(rototranslated_robot, environment):
         if check_collision_shape(robot, envObject):
@@ -60,17 +61,21 @@ def check_collision_list(
     return False
 
 
-def check_collision_shape(a: PlacedPrimitive, b: PlacedPrimitive) -> bool:
+def check_collision_shape(a: PlacedPrimitive, 
+                          b: PlacedPrimitive) -> bool:
+                          
     # This is just some code to get you started, but you don't have to follow it exactly
 
     # TODO check if the two primitives are colliding
     if isinstance(a.primitive, Circle) and isinstance(b.primitive, Circle):
-        ...
+        print("========= circle vs circle")
+#    https://stackoverflow.com/questions/24727773/detecting-rectangle-collision-with-a-circle
+
     if isinstance(a.primitive, Rectangle) and isinstance(b.primitive, Circle):
-        ...
+        print("========= Rectangle vs circle")
+
     if isinstance(a.primitive, Rectangle) and isinstance(b.primitive, Rectangle):
-        ...
-    ...
+        print("========= Rectangle vs Rectangle")
 
     # TODO return the status of the collision
     # for now let's return a random guess
