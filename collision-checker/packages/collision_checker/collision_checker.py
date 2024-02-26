@@ -26,9 +26,9 @@ class CollisionChecker:
         self.params = data
 
     def on_received_query(self, context: Context, data: CollisionCheckQuery):
-        collided = check_collision(
-            environment=self.params.environment, robot_body=self.params.body, robot_pose=data.pose
-        )
+        collided = check_collision( environment=self.params.environment, 
+                                    robot_body=self.params.body, 
+                                    robot_pose=data.pose)
         result = CollisionCheckResult(collided)
         context.write("response", result)
 
