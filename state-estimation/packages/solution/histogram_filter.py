@@ -25,9 +25,8 @@ def histogram_predict(belief, left_encoder_ticks, right_encoder_ticks, grid_spec
     #  You will need  some parameters in the `robot_spec` defined above
 
     # You may find the following code useful to find the current best heading estimate:
-    maxids = np.unravel_index(belief_in.argmax(), belief_in.shape)
-    phi_max = grid_spec['phi_min'] + (maxids[1] + 0.5) * grid_spec['delta_phi']
-
+    maxids = np.unravel_index(belief_in.argmax(), belief_in.shape)  # indices (i,j) of max belief
+    phi_max = grid_spec['phi_min'] + (maxids[1] + 0.5) * grid_spec['delta_phi'] # value of phi at max belief location
 
     # Calculate rotation on the wheels
     dphi_left = 2 * np.pi * left_encoder_ticks / robot_spec["encoder_resolution"]
@@ -39,12 +38,11 @@ def histogram_predict(belief, left_encoder_ticks, right_encoder_ticks, grid_spec
     # Evaluate bot lateral displacement (applies non-uniformely to D state, depends on Phi state)
     d_straight = robot_spec["wheel_radius"] * ( dphi_right + dphi_left) / 2 
     #d_lateral = d_straight * np.sin(grid_spec['phi']) # array
-    d_lateral = d_straight * np.sin(phi_bot) # scalar
+    d_lateral = d_straight * np.sin(phi_max) # scalar
 
     # propagate each centroid
     d_t = grid_spec['d'] + d_lateral
     phi_t = grid_spec['phi'] + phi_bot
-
 
     p_belief = np.zeros(belief.shape)
 
