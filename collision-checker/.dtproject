@@ -8,6 +8,7 @@ NAME=collision-checker
 # recipe repository and location
 # - fully qualified name of the recipe repository, e.g., 'duckietown/duckietown-lx-recipes'
 RECIPE_REPOSITORY=duckietown/duckietown-lx-recipes
+#RECIPE_REPOSITORY=olivier-2018/duckietown-lx-recipes
 
 # - branch of RECIPE_REPOSITORY containing the recipe
 RECIPE_BRANCH=mooc2022
