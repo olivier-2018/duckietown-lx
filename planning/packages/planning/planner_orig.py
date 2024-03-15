@@ -1,5 +1,4 @@
 from typing import List
-import math
 
 from aido_schemas import Context, FriendlyPose
 from dt_protocols import (
@@ -68,57 +67,36 @@ class Planner:
 
         # If it is feasible you need to provide a plan.
 
-        # Challenge: lx22-planning-dd-empty-vali
+        # A plan is a list of PlanStep
         plan: List[PlanStep] = []
 
         # A plan step consists in a duration, a linear and angular velocity.
 
-        # First rotate towards the goal
-        angle_to_goal = math.atan2(goal.y - start.y, goal.x - start.x) * 180 / math.pi
-        if angle_to_goal != 0.0:
-            duration_turn_deg_s = angle_to_goal / self.params.max_angular_velocity_deg_s
-            rot_dir = 1.0
-            if angle_to_goal < 0: rot_dir = -1.0
-            turn_to_goal = PlanStep(duration = rot_dir * duration_turn_deg_s,
-                                    angular_velocity_deg_s = rot_dir * self.params.max_angular_velocity_deg_s,
-                                    velocity_x_m_s=0.0)
-            plan.append(turn_to_goal)
+        # For now let's just trace a square of side L at maximum velocity.
+        L = 1.0
+        duration_straight_m_s = L / self.params.max_linear_velocity_m_s
+        duration_turn_deg_s = 90.0 / self.params.max_angular_velocity_deg_s
+        # The plan will be: straight, turn, straight, turn, straight, turn, straight, turn
 
-        # Second, move towards the goal
-        dist = ( (goal.y - start.y)**2 + (goal.x - start.x)**2 )**(1/2)
-        if dist != 0.0:
-            duration_straight_m_s = dist / self.params.max_linear_velocity_m_s
-            reach_goal = PlanStep(  duration = duration_straight_m_s,
-                                    angular_velocity_deg_s = 0.0,
-                                    velocity_x_m_s = self.params.max_linear_velocity_m_s )
-            plan.append(reach_goal)
-        
-        print("=======================")
-        print(f"start angle: {start.theta_deg}")
-        print(f"goal angle: {goal.theta_deg}")
-        print(f"angle_to_goal: {angle_to_goal}")
+        straight = PlanStep(
+            duration=duration_straight_m_s,
+            angular_velocity_deg_s=0.0,
+            velocity_x_m_s=self.params.max_linear_velocity_m_s,
+        )
+        turn = PlanStep(
+            duration=duration_turn_deg_s,
+            angular_velocity_deg_s=self.params.max_angular_velocity_deg_s,
+            velocity_x_m_s=0.0,
+        )
 
-        # Third, align to goal's angle
-        theta_in = angle_to_goal
-        if theta_in < 0: theta_in += 360
-        theta_out = goal.theta_deg
-        delta1 = abs(theta_out - theta_in)
-        delta2 = abs(360+theta_out - theta_in)
-        delta = min(delta1,delta2)
-        shift = 0.0
-        if delta == delta2 : shift += 360
-        rot_dir = (((abs(theta_in)-abs(theta_out+shift)) < 0) * 1 - 0.5 ) *2
-        print(f"delta: {delta} rot_dir:{rot_dir}")
-
-        if delta != 0.0:
-            duration_turn_deg_s = delta / self.params.max_angular_velocity_deg_s
-            velocity = rot_dir * self.params.max_angular_velocity_deg_s
-            print(f"duration: {duration_turn_deg_s} angular_velocity_deg_s:{velocity}")
-
-            align_to_goal = PlanStep(duration = duration_turn_deg_s ,
-                                     angular_velocity_deg_s = velocity ,
-                                     velocity_x_m_s = 0.0)
-            plan.append(align_to_goal)
+        plan.append(straight)
+        plan.append(turn)
+        plan.append(straight)
+        plan.append(turn)
+        plan.append(straight)
+        plan.append(turn)
+        plan.append(straight)
+        plan.append(turn)
 
         result: PlanningResult = PlanningResult(feasible, plan)
         context.write("response", result)
